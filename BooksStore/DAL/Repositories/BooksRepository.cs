@@ -17,6 +17,16 @@ namespace BooksStore.DAL.Repositories
             this.context = postgreSqlContext;
         }
 
+        public Task CreateAsync(Book book)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Book book)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> ExistsAsync(Expression<Func<Book, bool>> predicate)
         {
             return await this.context.Books.AnyAsync(predicate);
