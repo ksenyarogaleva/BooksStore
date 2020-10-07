@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BooksStore.BLL.Interfaces
 {
-    public interface IService<TEntity> where TEntity:class
+    public interface IService<TDto> 
+        where TDto:class
     {
-        bool Exists(TEntity entity);
-        IEnumerable<TEntity> GetAll();
-        TEntity GetSingle(int id);
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> ExistsAsync(TDto entity);
+        Task<IEnumerable<TDto>> GetAllAsync();
+        Task<TDto> GetSingleAsync(int id);
     }
 }

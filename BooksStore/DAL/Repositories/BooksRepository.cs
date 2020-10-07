@@ -32,11 +32,6 @@ namespace BooksStore.DAL.Repositories
             return await this.context.Books.AnyAsync(predicate);
         }
 
-        public async  Task<IEnumerable<Book>> FindAsync(Expression<Func<Book, bool>> predicate)
-        {
-            return await this.context.Books.Where(predicate).ToListAsync();
-        }
-
         public async Task<IEnumerable<Book>> GetAllAsync()
         {
             return await this.context.Books

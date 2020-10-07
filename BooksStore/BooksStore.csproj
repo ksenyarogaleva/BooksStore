@@ -8,12 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="BLL\Services\NewFolder\**" />
+    <Compile Remove="Helpers\**" />
     <Content Remove="BLL\Services\NewFolder\**" />
+    <Content Remove="Helpers\**" />
     <EmbeddedResource Remove="BLL\Services\NewFolder\**" />
+    <EmbeddedResource Remove="Helpers\**" />
     <None Remove="BLL\Services\NewFolder\**" />
+    <None Remove="Helpers\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

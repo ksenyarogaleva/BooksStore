@@ -9,7 +9,6 @@ namespace BooksStore.DAL.Interfaces
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetSingleAsync(int id);
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }
