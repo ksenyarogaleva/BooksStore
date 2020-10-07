@@ -20,14 +20,40 @@ namespace BooksStore.BLL.Services
             this.uow = unitOfWork;
             this.mapper = mapper;
         }
+
         public async Task CreateBookAsync(BookDTO book)
         {
-            throw new NotImplementedException();
+            var entity = mapper.Map<Book>(book);
+            entity.BookAuthors = new List<BookAuthor>();
+
+            var separators = ';';
+            var authors = book.Author.Split(separators);
+
+
+            var doesBookExists = await uow.Books.ExistsAsync(b => b.Title.ToUpper().Equals(book.Title.ToUpper()));
+           
+            if (!doesBookExists)
+            {
+                foreach(var author in authors){
+                    var authorEntity = await uow.Authors.GetAuthorByName(author);
+
+                    var bookAuthor = new BookAuthor
+                    {
+                        Book = entity,
+                        Author = authorEntity,
+                    };
+
+                    entity.BookAuthors.Add(bookAuthor);
+                }
+
+                await uow.Books.CreateAsync(entity);
+            }
         }
 
         public async Task DeleteBookAsync(int id)
         {
-            throw new NotImplementedException();
+            var book = await uow.Books.GetSingleAsync(id);
+            await uow.Books.DeleteAsync(book);
         }
 
         public async Task<bool> ExistsAsync(BookDTO entity)

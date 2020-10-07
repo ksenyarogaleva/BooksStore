@@ -14,7 +14,8 @@ namespace BooksStore.Automapper
         public void CreateMap()
         {
             CreateMap<Book, BookDTO>()
-                .ForMember(b => b.Author, opt => opt.Ignore());
+                .ForMember(b => b.Author, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

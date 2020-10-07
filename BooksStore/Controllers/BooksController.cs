@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BooksStore.BLL.Interfaces;
+using BooksStore.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace BooksStore.Controllers
 {
@@ -10,9 +10,7 @@ namespace BooksStore.Controllers
     public class BooksController : ControllerBase
     {
 
-        private readonly ILogger<BooksController> _logger;
         private readonly IBooksService service;
-
         public BooksController(IBooksService booksService)
         {
             this.service = booksService;
@@ -34,5 +32,25 @@ namespace BooksStore.Controllers
             return Ok(new { book });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] BookDTO book)
+        {
+            await service.CreateBookAsync(book);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var book = await service.GetSingleAsync(id);
+            if(book is null)
+            {
+                return NotFound();
+            }
+
+            await service.DeleteBookAsync(id);
+            return Ok();
+        }
     }
 }
