@@ -7,5 +7,6 @@ namespace BooksStore.DAL.Interfaces
     {
         Task CreateAsync(Book book);
         Task DeleteAsync(Book book);
+        Task<Book> GetBookByTitleAsync(string title);
     }
 }

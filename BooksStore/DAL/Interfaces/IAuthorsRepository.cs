@@ -5,6 +5,8 @@ namespace BooksStore.DAL.Interfaces
 {
     public interface IAuthorsRepository:IRepository<Author>
     {
-        Task<Author> GetAuthorByName(string name);
+        Task CreateAuthorAsync(Author author);
+        Task DeleteAuthorAsync(Author author);
+        Task<Author> GetAuthorByNameAsync(string name);
     }
 }

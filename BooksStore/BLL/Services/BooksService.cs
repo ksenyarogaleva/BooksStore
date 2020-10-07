@@ -35,8 +35,9 @@ namespace BooksStore.BLL.Services
             if (!doesBookExists)
             {
                 foreach(var author in authors){
-                    var authorEntity = await uow.Authors.GetAuthorByName(author);
+                    var authorEntity = await uow.Authors.GetAuthorByNameAsync(author);
 
+                    //TODO: add here a condition if there is no such author in db
                     var bookAuthor = new BookAuthor
                     {
                         Book = entity,

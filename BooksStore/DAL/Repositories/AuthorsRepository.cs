@@ -17,6 +17,18 @@ namespace BooksStore.DAL.Repositories
             this.context = postgreSqlContext;
         }
 
+        public async Task CreateAuthorAsync(Author author)
+        {
+            await context.Authors.AddAsync(author);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAuthorAsync(Author author)
+        {
+            context.Authors.Remove(author);
+            await context.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsAsync(Expression<Func<Author, bool>> predicate)
         {
             return await this.context.Authors.AnyAsync(predicate);
@@ -30,7 +42,7 @@ namespace BooksStore.DAL.Repositories
                    .ToListAsync();
         }
 
-        public async Task<Author> GetAuthorByName(string name)
+        public async Task<Author> GetAuthorByNameAsync(string name)
         {
             return await this.context.Authors
                 .Include(author => author.BookAuthors)

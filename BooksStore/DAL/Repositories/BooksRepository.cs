@@ -42,6 +42,14 @@ namespace BooksStore.DAL.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Book> GetBookByTitleAsync(string title)
+        {
+            return await this.context.Books
+                   .Include(book => book.BookAuthors)
+                   .ThenInclude(bookAuthor => bookAuthor.Author)
+                   .FirstOrDefaultAsync(a => a.Title.ToUpper().Equals(title.ToUpper()));
+        }
+
         public async Task<Book> GetSingleAsync(int id)
         {
             return await this.context.Books
