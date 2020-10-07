@@ -22,6 +22,7 @@ namespace BooksStore.ServiceExtensions
             services.AddScoped<IAuthorsRepository, AuthorsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IBooksService, BooksService>();
+            services.AddTransient<IAuthorsService, AuthorsService>();
         }
     }
 }

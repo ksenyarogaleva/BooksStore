@@ -5,6 +5,7 @@ using BooksStore.Models;
 using BooksStore.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,15 +27,11 @@ namespace BooksStore.BLL.Services
             var entity = mapper.Map<Book>(book);
             entity.BookAuthors = new List<BookAuthor>();
 
-            var separators = ';';
-            var authors = book.Author.Split(separators);
-
-
             var doesBookExists = await uow.Books.ExistsAsync(b => b.Title.ToUpper().Equals(book.Title.ToUpper()));
            
             if (!doesBookExists)
             {
-                foreach(var author in authors){
+                foreach(var author in book.Authors){
                     var authorEntity = await uow.Authors.GetAuthorByNameAsync(author);
 
                     //TODO: add here a condition if there is no such author in db
@@ -70,7 +67,7 @@ namespace BooksStore.BLL.Services
             foreach (var entity in entities)
             {
                 var book = mapper.Map<BookDTO>(entity);
-                book.Author = this.GetAuthors(entity);
+                book.Authors = this.GetAuthors(entity).ToList();
                 books.Add(book);
             }
 
@@ -81,21 +78,20 @@ namespace BooksStore.BLL.Services
         {
             var entity = await this.uow.Books.GetSingleAsync(id);
             var book = mapper.Map<BookDTO>(entity);
-            book.Author = this.GetAuthors(entity);
+            book.Authors = this.GetAuthors(entity).ToList();
 
             return book;
         }
 
-        private string GetAuthors(Book book)
+        private IEnumerable<string> GetAuthors(Book book)
         {
-            var authors = new StringBuilder();
+            var authors = new List<string>();
             foreach (var author in book.BookAuthors)
             {
-                authors.Append(author.Author.Name);
-                authors.Append(';');
+                authors.Add(author.Author.Name);
             }
 
-            return authors.ToString();
+            return authors;
         }
     }
 }
