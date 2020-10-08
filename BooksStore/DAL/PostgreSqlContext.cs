@@ -19,6 +19,10 @@ namespace BooksStore.DAL
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Book>()
+                .Property(b => b.Id).UseIdentityAlwaysColumn();
+            builder.Entity<Author>()
+                .Property(a => a.Id).UseIdentityAlwaysColumn();
             builder.Entity<BookAuthor>()
                 .HasKey(ba => new { ba.BookId, ba.AuthorId });
 
