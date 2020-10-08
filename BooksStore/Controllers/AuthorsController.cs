@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BooksStore.Controllers
 {
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase

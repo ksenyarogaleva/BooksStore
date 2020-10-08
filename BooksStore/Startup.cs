@@ -1,15 +1,16 @@
 using AutoMapper;
-using BooksStore.Automapper;
 using BooksStore.DAL;
-using BooksStore.ServiceExtensions;
+using BooksStore.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 
 namespace BooksStore
@@ -27,23 +28,20 @@ namespace BooksStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddApiVersioning(opt =>
+            {
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ReportApiVersions = true;
+            });
+
+
+            services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
+
             services.AddAutoMapper(typeof(Startup).Assembly);
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "BooksStore",
-                    Description = "DB of books and authors.",
-                    Contact=new OpenApiContact 
-                    {
-                        Name="Kseniya Rohaleva",
-                        Email="kseniya.rohaleva@innowise-group.com",
-                        Url= new Uri("https://www.linkedin.com/in/kseniya-rogaleva-555b7b1a7/"),
-                    }
-                });
-            });
 
             var connectionString = Configuration.GetConnectionString("PostgreSqlConnectionString");
             services.AddDbContext<PostgreSqlContext>(options =>
@@ -53,7 +51,7 @@ namespace BooksStore
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -75,7 +73,12 @@ namespace BooksStore
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger");
+                foreach(var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
             });
         }
     }

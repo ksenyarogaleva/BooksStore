@@ -4,7 +4,7 @@ using BooksStore.DAL.Interfaces;
 using BooksStore.DAL.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BooksStore.ServiceExtensions
+namespace BooksStore.Helpers
 {
     public static class ServiceExtensions
     {
