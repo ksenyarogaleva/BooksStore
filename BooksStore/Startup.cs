@@ -1,3 +1,5 @@
+using AutoMapper;
+using BooksStore.Automapper;
 using BooksStore.DAL;
 using BooksStore.ServiceExtensions;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +25,7 @@ namespace BooksStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             var connectionString = Configuration.GetConnectionString("PostgreSqlConnectionString");
             services.AddDbContext<PostgreSqlContext>(options =>

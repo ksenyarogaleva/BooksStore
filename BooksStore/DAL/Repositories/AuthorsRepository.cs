@@ -1,5 +1,5 @@
 ﻿using BooksStore.DAL.Interfaces;
-using BooksStore.Models;
+using BooksStore.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

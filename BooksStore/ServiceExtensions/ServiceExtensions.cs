@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using BooksStore.Automapper;
-using BooksStore.BLL.Interfaces;
+﻿using BooksStore.BLL.Interfaces;
 using BooksStore.BLL.Services;
 using BooksStore.DAL.Interfaces;
 using BooksStore.DAL.Repositories;
@@ -10,12 +8,6 @@ namespace BooksStore.ServiceExtensions
 {
     public static class ServiceExtensions
     {
-        public static void AddAutoMapper(this IServiceCollection services)
-        {
-            IMapper mapper = AutomapperConfiguration.GetMapperConfiguration();
-            services.AddSingleton(mapper);
-        }
-
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IBooksRepository, BooksRepository>();

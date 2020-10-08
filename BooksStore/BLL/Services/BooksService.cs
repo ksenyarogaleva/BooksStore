@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using BooksStore.BLL.Interfaces;
 using BooksStore.DAL.Interfaces;
-using BooksStore.Models;
+using BooksStore.Models.Entities;
 using BooksStore.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BooksStore.BLL.Services

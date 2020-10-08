@@ -1,4 +1,4 @@
-﻿using BooksStore.Models;
+﻿using BooksStore.Models.Entities;
 using System.Threading.Tasks;
 
 namespace BooksStore.DAL.Interfaces

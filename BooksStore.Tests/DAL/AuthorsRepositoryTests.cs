@@ -1,8 +1,5 @@
-using BooksStore.DAL;
 using BooksStore.DAL.Interfaces;
-using BooksStore.Models;
-using BooksStore.Tests.BLL;
-using Microsoft.EntityFrameworkCore;
+using BooksStore.Models.Entities;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BooksStore.BLL.Interfaces;
 using BooksStore.DAL.Interfaces;
-using BooksStore.Models;
+using BooksStore.Models.Entities;
 using BooksStore.Models.DTO;
 using System.Collections.Generic;
 using System.Linq;
